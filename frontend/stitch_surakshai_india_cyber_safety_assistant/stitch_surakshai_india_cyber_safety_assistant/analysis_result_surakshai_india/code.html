@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"primary-fixed":"#dae2fd","on-tertiary-fixed":"#002114","secondary-fixed":"#dbe1ff","on-secondary-fixed-variant":"#003ea8","on-secondary-container":"#fefcff","on-primary-fixed-variant":"#3f465c","on-tertiary":"#ffffff","on-primary-container":"#7c839b","inverse-on-surface":"#eff1f3","surface-container-low":"#f2f4f6","surface":"#f7f9fb","surface-container-lowest":"#ffffff","error-container":"#ffdad6","secondary-container":"#316bf3","on-primary":"#ffffff","primary":"#000000","surface-variant":"#e0e3e5","on-error":"#ffffff","background":"#f7f9fb","on-primary-fixed":"#131b2e","secondary":"#0051d5","on-secondary-fixed":"#00174b","inverse-surface":"#2d3133","tertiary-fixed-dim":"#68dba9","surface-container-highest":"#e0e3e5","surface-dim":"#d8dadc","surface-container":"#eceef0","tertiary-fixed":"#85f8c4","on-surface-variant":"#45464d","inverse-primary":"#bec6e0","on-tertiary-fixed-variant":"#005137","on-error-container":"#93000a","outline":"#76777d","primary-fixed-dim":"#bec6e0","surface-container-high":"#e6e8ea","on-background":"#191c1e","on-tertiary-container":"#069669","tertiary":"#000000","tertiary-container":"#002114","on-surface":"#191c1e","on-secondary":"#ffffff","surface-bright":"#f7f9fb","primary-container":"#131b2e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"3xl":"64px","unit":"4px","md":"16px","xl":"32px","2xl":"48px","lg":"24px","margin-desktop":"auto","margin-mobile":"16px","sm":"8px","gutter":"24px","xs":"4px","max-width":"1280px"},"fontFamily":{"headline-md":["Inter"],"hindi-body":["Noto Sans Devanagari"],"headline-sm":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"display-lg-mobile":["Inter"],"display-lg":["Inter"],"body-lg":["Inter"]},"fontSize":{"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"hindi-body":["18px",{"lineHeight":"30px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="bg-background font-body-md text-on-surface"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-max-width mx-auto px-margin-mobile lg:px-lg flex items-center justify-between"><div class="flex items-center gap-sm"><img alt="SurakshAI-India Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqzZNVv3QtfB1CEDEKxPsxzCHIBY9TZW8cqK8kdP6DbyOXoViCfNnX5qHN6ZGHl2lcQVzVEtInDMuHbRHkGSiQPejA7-Fk_hSuG_goB-Akj8haOx1q2hBCot0ljkFweHdRHZ56O-xakREUMlqV-I7q8Sj2jwAmImGnNrfGYJGiyFfWEtjPu6rseToCHlBNlV1c6WtmZHvkEgGV8CzR4UghjMNzOEomw1CHKYwHaCuJCPoJReN6jam2vg"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">SurakshAI-India</span></div><nav class="hidden md:flex items-center gap-lg" data-active-classes="text-secondary font-bold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" data-path="home" href="#">How it works</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" data-path="learn" href="#">Safety tips</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" data-path="analyse" href="#">Try demo</a></nav><div class="flex items-center gap-md"><button class="md:hidden flex items-center text-on-surface"><span class="material-symbols-outlined">menu</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16"><div class="flex flex-col w-full">
+<div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg w-full pb-3xl">
+<!-- Top Action Bar -->
+<div class="flex items-center justify-between py-md mb-md">
+<a class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:-translate-x-1">arrow_back</span>
+<span class="font-label-md text-label-md">Analyse another message</span>
+</a>
+<span class="font-label-md text-label-md text-outline uppercase tracking-wider text-[11px]">SurakshAI analysis</span>
+</div>
+<!-- Main Content Area: Split Layout -->
+<div class="flex flex-col lg:flex-row gap-xl">
+<!-- Left Column: Verdict & Summary -->
+<div class="w-full lg:w-[420px] shrink-0 flex flex-col gap-lg">
+<!-- Verdict Card -->
+<div class="bg-error-container/30 rounded-xl p-lg relative overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex items-start justify-between mb-lg">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-error/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-error-container leading-tight">Likely Scam Detected</h1>
+<p class="font-body-md text-label-md text-on-error-container/70">Proceed with extreme caution</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm mb-lg">
+<div class="bg-surface/60 backdrop-blur-sm rounded-lg p-sm flex flex-col gap-xs">
+<span class="font-label-md text-[11px] text-on-surface-variant uppercase tracking-wider">Severity</span>
+<div class="flex items-center gap-xs text-error">
+<span class="material-symbols-outlined text-[16px]">dangerous</span>
+<span class="font-label-md text-label-md font-bold">High Risk</span>
+</div>
+</div>
+<div class="bg-surface/60 backdrop-blur-sm rounded-lg p-sm flex flex-col gap-xs">
+<span class="font-label-md text-[11px] text-on-surface-variant uppercase tracking-wider">Category</span>
+<div class="flex items-center gap-xs text-on-surface">
+<span class="material-symbols-outlined text-[16px]">money_off</span>
+<span class="font-label-md text-label-md">KYC Fraud</span>
+</div>
+</div>
+</div>
+<!-- Confidence Ring -->
+<div class="flex items-center gap-md bg-surface/80 rounded-lg p-md">
+<div class="relative w-16 h-16 shrink-0">
+<svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+<path class="text-outline-variant/30" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-error transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="98, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-headline-sm text-[14px] font-bold text-on-surface">98%</span>
+</div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Confidence Score</p>
+<p class="font-body-md text-[12px] text-on-surface-variant">Our AI models are highly confident this is a malicious message.</p>
+</div>
+</div>
+<div class="mt-lg pt-md flex items-center justify-end border-t border-error/10">
+<span class="font-label-md text-[10px] text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[12px]">psychology</span>
+              Analysed with Gemini
+            </span>
+</div>
+</div>
+<!-- Hindi Explanation (Saffron/Warning hue) -->
+<div class="bg-error-container/10 rounded-xl p-lg relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#f97316]"></div>
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-[#f97316] text-[20px]">translate</span>
+<h2 class="font-hindi-body text-headline-sm text-on-surface">सरल हिंदी में समझें</h2>
+</div>
+<p class="font-hindi-body text-hindi-body text-on-surface-variant">
+            यह संदेश एक <strong>धोखाधड़ी (Scam)</strong> प्रतीत होता है। प्रेषक यह दावा कर रहा है कि आपका बैंक खाता या KYC निलंबित कर दिया गया है। वे आपको एक लिंक पर क्लिक करने के लिए डरा रहे हैं। <strong>कृपया किसी भी लिंक पर क्लिक न करें</strong> या अपनी व्यक्तिगत जानकारी साझा न करें।
+          </p>
+</div>
+</div>
+<!-- Right Column: Details & Actions -->
+<div class="flex-1 flex flex-col gap-xl">
+<!-- Analysis Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Message Highlight -->
+<div class="bg-surface-container rounded-xl p-lg flex flex-col h-full shadow-sm">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-secondary text-[20px]">plagiarism</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Why this was flagged</h2>
+</div>
+<div class="bg-surface rounded-lg p-md mb-md font-body-md text-body-md text-on-surface-variant italic leading-relaxed border border-outline-variant/30">
+              "Dear Customer, your HDFC Bank account will be <span class="bg-error/10 text-error font-medium px-1 rounded">suspended in 24 hours</span> due to incomplete KYC. Update immediately to avoid blocking: <span class="bg-error/10 text-error font-medium px-1 rounded break-all">http://hdfc-update-kyc.info/login</span>"
+            </div>
+<div class="flex flex-col gap-sm">
+<div class="flex gap-md items-start bg-surface/50 p-sm rounded-lg">
+<span class="material-symbols-outlined text-error text-[18px] mt-1 shrink-0">timer</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">False Urgency</p>
+<p class="font-body-md text-[13px] text-on-surface-variant">Banks rarely give 24-hour ultimatums for KYC suspension via SMS.</p>
+</div>
+</div>
+<div class="flex gap-md items-start bg-surface/50 p-sm rounded-lg">
+<span class="material-symbols-outlined text-error text-[18px] mt-1 shrink-0">link</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Suspicious URL</p>
+<p class="font-body-md text-[13px] text-on-surface-variant">The domain 'hdfc-update-kyc.info' is not an official bank website.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Tactics -->
+<div class="bg-surface-container rounded-xl p-lg flex flex-col h-full shadow-sm">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-secondary text-[20px]">mindfulness</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Manipulation Tactics</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">
+              Scammers use psychological tricks to make you act without thinking. This message exhibits:
+            </p>
+<div class="flex flex-wrap gap-sm">
+<div class="px-md py-sm rounded-full bg-error/10 text-error font-label-md text-[12px] uppercase tracking-wider flex items-center gap-xs transition-transform hover:scale-105 cursor-default">
+<span class="material-symbols-outlined text-[14px]">alarm</span> False Urgency
+              </div>
+<div class="px-md py-sm rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-md text-[12px] uppercase tracking-wider flex items-center gap-xs transition-transform hover:scale-105 cursor-default">
+<span class="material-symbols-outlined text-[14px]">badge</span> Authority Impersonation
+              </div>
+<div class="px-md py-sm rounded-full bg-surface-variant text-on-surface-variant font-label-md text-[12px] uppercase tracking-wider flex items-center gap-xs transition-transform hover:scale-105 cursor-default">
+<span class="material-symbols-outlined text-[14px]">phishing</span> Phishing Link
+              </div>
+</div>
+</div>
+</div>
+<!-- Action Plan -->
+<div class="bg-secondary-fixed/30 rounded-xl p-lg md:p-xl shadow-sm">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-secondary text-[24px]">verified_user</span>
+<h2 class="font-display-lg-mobile text-[24px] md:text-[28px] text-on-surface tracking-tight">What you should do next</h2>
+</div>
+<div class="flex flex-col gap-md mb-xl">
+<div class="flex gap-md bg-surface p-md rounded-lg items-center shadow-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center font-headline-sm shrink-0">1</div>
+<p class="font-body-md text-body-md text-on-surface"><strong>Do not click</strong> any links or reply to the message.</p>
+</div>
+<div class="flex gap-md bg-surface p-md rounded-lg items-center shadow-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center font-headline-sm shrink-0">2</div>
+<p class="font-body-md text-body-md text-on-surface"><strong>Block and report</strong> the sender's number through your phone's SMS app.</p>
+</div>
+<div class="flex gap-md bg-error-container/20 border border-error/20 p-md rounded-lg items-center shadow-sm relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-1 bg-error"></div>
+<div class="w-8 h-8 rounded-full bg-error/10 text-error flex items-center justify-center font-headline-sm shrink-0">3</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface">If you clicked the link or lost money, immediately call the National Cyber Crime Helpline at <strong class="text-error text-[18px]">1930</strong>.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-md">
+<button class="bg-secondary text-on-secondary hover:bg-secondary/90 px-lg py-3 rounded-lg font-label-md text-label-md flex items-center gap-sm transition-all hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 focus:ring-2 focus:ring-secondary/50 focus:outline-none">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+              Report to Cybercrime.gov.in
+            </button>
+<button class="bg-transparent text-secondary border border-secondary hover:bg-secondary/5 px-lg py-3 rounded-lg font-label-md text-label-md flex items-center gap-sm transition-colors focus:ring-2 focus:ring-secondary/50 focus:outline-none">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+              Copy steps
+            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple intersection observer to trigger entrance animations if needed
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll('.rounded-xl');
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${index * 0.1}s`;
+      
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 50);
+    });
+  });
+</script></main><footer class="w-full bg-surface-container py-xl mt-3xl"><div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg"><div class="flex flex-col items-center gap-md text-center"><p class="font-body-md text-label-md text-on-surface-variant max-w-2xl">SurakshAI provides guidance, not a guarantee. Verify important requests through official channels.</p><div class="h-px w-24 bg-outline-variant"></div><p class="font-label-md text-label-md text-on-surface-variant opacity-70">© 2024 SurakshAI-India. All rights reserved.</p></div></div></footer></body></html>

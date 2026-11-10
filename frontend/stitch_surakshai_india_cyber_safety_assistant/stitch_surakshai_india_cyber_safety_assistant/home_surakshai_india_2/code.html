@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+  .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+  .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+  .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"primary-fixed":"#dae2fd","on-tertiary-fixed":"#002114","secondary-fixed":"#dbe1ff","on-secondary-fixed-variant":"#003ea8","on-secondary-container":"#fefcff","on-primary-fixed-variant":"#3f465c","on-tertiary":"#ffffff","on-primary-container":"#7c839b","inverse-on-surface":"#eff1f3","surface-container-low":"#f2f4f6","surface":"#f7f9fb","surface-container-lowest":"#ffffff","error-container":"#ffdad6","secondary-container":"#316bf3","on-primary":"#ffffff","primary":"#000000","surface-variant":"#e0e3e5","on-error":"#ffffff","background":"#f7f9fb","on-primary-fixed":"#131b2e","secondary":"#0051d5","on-secondary-fixed":"#00174b","inverse-surface":"#2d3133","tertiary-fixed-dim":"#68dba9","surface-container-highest":"#e0e3e5","surface-dim":"#d8dadc","surface-container":"#eceef0","tertiary-fixed":"#85f8c4","on-surface-variant":"#45464d","inverse-primary":"#bec6e0","on-tertiary-fixed-variant":"#005137","on-error-container":"#93000a","outline":"#76777d","primary-fixed-dim":"#bec6e0","surface-container-high":"#e6e8ea","on-background":"#191c1e","on-tertiary-container":"#069669","tertiary":"#000000","tertiary-container":"#002114","on-surface":"#191c1e","on-secondary":"#ffffff","surface-bright":"#f7f9fb","primary-container":"#131b2e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"3xl":"64px","unit":"4px","md":"16px","xl":"32px","2xl":"48px","lg":"24px","margin-desktop":"auto","margin-mobile":"16px","sm":"8px","gutter":"24px","xs":"4px","max-width":"1280px"},"fontFamily":{"headline-md":["Inter"],"hindi-body":["Noto Sans Devanagari"],"headline-sm":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"display-lg-mobile":["Inter"],"display-lg":["Inter"],"body-lg":["Inter"]},"fontSize":{"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"hindi-body":["18px",{"lineHeight":"30px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="bg-background font-body-md text-on-surface"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-max-width mx-auto px-margin-mobile lg:px-lg flex items-center justify-between"><div class="flex items-center gap-sm"><img alt="SurakshAI-India Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLtnct5ZSlbI6VcuJ0aKcFOwl0UjRnzzan7xuIHJHRfwRRDY0T83GwZFDCDxt9NTz8xFsRJNpghGPcVokzjyzeasomGeFgJVmYqrge1Q1NIYfbJh3FYNvFqSM05vtOpcGSwtRKdxTpzDdwj1KLkWH3TIaqpiJx2OqaJnr6YGSpuM1dQvEkTbnwyrb0H3HNfvISIEkEa4EoNH1a-BhJ6d64wcH3VschIT_3Sc-dxNNKbkWQot-hrB5NjYjh-t"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">SurakshAI-India</span><span class="text-xs text-on-surface-variant font-medium">Think before you click.</span></div></div><nav class="hidden md:flex items-center gap-lg" data-active-classes="text-secondary font-bold"><a aria-current="page" class="transition-colors text-secondary font-bold hover:-translate-y-0.5 transform duration-200" data-path="home" href="#">How it works</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary hover:-translate-y-0.5 transform transition-all duration-200" data-path="learn" href="#">Safety tips</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary hover:-translate-y-0.5 transform transition-all duration-200" data-path="analyse" href="#">Try demo</a></nav><div class="flex items-center gap-md"><button class="md:hidden flex items-center text-on-surface"><span class="material-symbols-outlined">menu</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16"><div class="flex flex-col w-full font-body-md text-on-surface">
+<section class="relative w-full overflow-hidden bg-background pt-xl pb-2xl md:pt-3xl md:pb-3xl">
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<svg class="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient cx="50%" cy="50%" fx="50%" fy="50%" id="heroGlow" r="50%">
+<stop class="text-secondary/20" offset="0%" stop-color="currentColor"></stop>
+<stop class="text-secondary/0" offset="100%" stop-color="currentColor"></stop>
+</radialGradient>
+</defs>
+<circle cx="80%" cy="30%" fill="url(#heroGlow)" r="40%"></circle>
+<circle class="text-primary/10" cx="20%" cy="70%" fill="url(#heroGlow)" r="30%"></circle>
+</svg>
+</div>
+<div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl items-center">
+<!-- Left: Copy & Input -->
+<div class="lg:col-span-7 flex flex-col gap-lg">
+<div class="flex flex-col gap-sm animate-fade-in-up stagger-1">
+<div class="inline-flex items-center gap-sm px-md py-xs rounded-full bg-surface-container-high w-fit shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span class="font-label-md text-label-md text-on-surface-variant">AI-powered scam awareness for India</span>
+</div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight leading-tight mt-md">
+              Is this message<br>
+<span class="text-secondary">a scam?</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mt-sm">
+              Paste an SMS, WhatsApp, email, or suspicious link. SurakshAI explains the warning signs in plain language.
+            </p>
+</div>
+<!-- Main Input Card -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-md flex flex-col gap-md border border-outline/10 hover:shadow-lg transition-shadow animate-fade-in-up stagger-2">
+<div class="relative">
+<textarea class="w-full min-h-[120px] bg-surface rounded-lg p-md font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-secondary/50 resize-none transition-shadow" id="messageInput" placeholder="Paste the suspicious message here...
+(e.g., Dear customer, your UPI account is blocked. Update PAN KYC via link immediately.)"></textarea>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-md">
+<div class="flex gap-sm">
+<button class="inline-flex items-center gap-xs px-md py-sm rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-highest transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">content_paste</span>
+                        Paste
+                    </button>
+<button class="inline-flex items-center gap-xs px-md py-sm rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-highest transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                         Scan
+                    </button>
+</div>
+<button class="inline-flex items-center justify-center gap-sm px-xl py-sm rounded-lg bg-secondary text-on-secondary font-label-md text-label-md shadow-sm hover:shadow-md hover:bg-secondary/90 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:bg-secondary" disabled="" id="analyseBtn">
+                    Analyse message
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Quick Examples -->
+<div class="flex flex-col gap-sm mt-sm animate-fade-in-up stagger-3">
+<span class="font-label-md text-label-md text-on-surface-variant">Try an example:</span>
+<div class="flex flex-wrap gap-sm">
+<button class="px-md py-xs rounded-full border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-secondary hover:text-secondary hover:bg-secondary/5 transition-all active:scale-95 bg-surface-container-lowest" onclick="document.getElementById('messageInput').value = 'Dear customer, your UPI account is blocked. Update PAN KYC via link immediately.'; document.getElementById('messageInput').dispatchEvent(new Event('input'));">
+                    "UPI account blocked"
+                </button>
+<button class="px-md py-xs rounded-full border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-secondary hover:text-secondary hover:bg-secondary/5 transition-all active:scale-95 bg-surface-container-lowest" onclick="document.getElementById('messageInput').value = 'Congratulations! You have been selected for a part-time remote job. Earn Rs 5000/day. Click here to join WhatsApp group.'; document.getElementById('messageInput').dispatchEvent(new Event('input'));">
+                    "Fake job offer"
+                </button>
+<button class="px-md py-xs rounded-full border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-secondary hover:text-secondary hover:bg-secondary/5 transition-all active:scale-95 bg-surface-container-lowest" onclick="document.getElementById('messageInput').value = 'KBC Lottery Winner! Your mobile number won Rs 25,000,000. Send processing fee of Rs 5000 to claim.'; document.getElementById('messageInput').dispatchEvent(new Event('input'));">
+                    "KBC lottery prize"
+                </button>
+</div>
+</div>
+</div>
+<!-- Right: Abstract Shield Visual -->
+<div class="hidden lg:flex lg:col-span-5 justify-center items-center relative h-full min-h-[400px] animate-fade-in-up stagger-4">
+<div class="relative w-[320px] h-[380px] animate-float hover:scale-105 transition-transform duration-700">
+<!-- Outer Glow -->
+<div class="absolute inset-0 bg-secondary-fixed/50 rounded-[40px] blur-3xl transform -rotate-6"></div>
+<!-- Main Shield Shape -->
+<svg class="absolute inset-0 w-full h-full drop-shadow-xl" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+<path class="text-surface-container-lowest" d="M100 0 L200 40 V120 C200 180 150 220 100 240 C50 220 0 180 0 120 V40 Z" fill="currentColor"></path>
+<!-- Inner decorative path -->
+<path class="text-secondary/30" d="M100 20 L180 52 V116 C180 164 140 196 100 212 C60 196 20 164 20 116 V52 Z" fill="none" stroke="currentColor" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+<!-- Floating Elements -->
+<div class="absolute top-1/4 left-0 -ml-md p-md bg-surface-container-lowest rounded-xl shadow-md border border-outline/10 flex items-center gap-sm animate-pulse-slow hover:scale-110 transition-transform cursor-default">
+<span class="material-symbols-outlined text-error">gpp_bad</span>
+<span class="font-label-md text-label-md text-on-surface">Phishing Link</span>
+</div>
+<div class="absolute bottom-1/3 right-0 -mr-lg p-md bg-surface-container-lowest rounded-xl shadow-md border border-outline/10 flex items-center gap-sm animate-float hover:scale-110 transition-transform cursor-default" style="animation-delay: 1s;">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">gpp_good</span>
+<span class="font-label-md text-label-md text-on-surface">Verified Sender</span>
+</div>
+<!-- Central Icon -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-24 h-24 rounded-full bg-secondary-container/20 flex items-center justify-center backdrop-blur-sm shadow-inner">
+<span class="material-symbols-outlined text-[48px] text-secondary">security</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="w-full bg-surface-container-lowest py-2xl">
+<div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg flex flex-col gap-xl">
+<!-- Emergency Banner -->
+<div class="flex justify-center animate-fade-in-up">
+<div class="inline-flex items-center gap-md px-lg py-sm rounded-full bg-amber-100 text-amber-900 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<span class="material-symbols-outlined text-[20px] font-bold">phone_in_talk</span>
+<span class="font-label-md text-label-md">If money was lost, call 1930 immediately or visit cybercrime.gov.in</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Feature 1 -->
+<div class="flex flex-col gap-md p-lg rounded-xl bg-surface-container hover:bg-surface-container-high transition-all hover:-translate-y-1 hover:shadow-md shadow-sm group animate-fade-in-up stagger-1">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">translate</span>
+</div>
+<div class="flex flex-col gap-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Understands Hinglish</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Scammers mix Hindi and English. SurakshAI understands local context and language patterns commonly used in Indian scams.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="flex flex-col gap-md p-lg rounded-xl bg-surface-container hover:bg-surface-container-high transition-all hover:-translate-y-1 hover:shadow-md shadow-sm group animate-fade-in-up stagger-2">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">troubleshoot</span>
+</div>
+<div class="flex flex-col gap-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Explains red flags</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">We don't just say 'scam'. We break down exactly why a message is dangerous, so you learn to spot them yourself.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="flex flex-col gap-md p-lg rounded-xl bg-surface-container hover:bg-surface-container-high transition-all hover:-translate-y-1 hover:shadow-md shadow-sm group animate-fade-in-up stagger-3">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">directions</span>
+</div>
+<div class="flex flex-col gap-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Guides your next step</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Get clear, actionable advice on what to do next—whether it's blocking a number, reporting to NCCRP, or securing your bank account.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<style>
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+</style>
+<script>
+  document.getElementById('messageInput').addEventListener('input', function(e) {
+    const btn = document.getElementById('analyseBtn');
+    if(e.target.value.trim().length > 0) {
+      btn.removeAttribute('disabled');
+    } else {
+      btn.setAttribute('disabled', 'true');
+    }
+  });
+</script>
+</main><footer class="w-full bg-surface-container py-xl mt-3xl"><div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg"><div class="flex flex-col items-center gap-md text-center"><p class="font-body-md text-label-md text-on-surface-variant max-w-2xl">SurakshAI provides guidance, not a guarantee. Verify important requests through official channels.</p><div class="h-px w-24 bg-outline-variant"></div><p class="font-label-md text-label-md text-on-surface-variant opacity-70">© 2024 SurakshAI-India. All rights reserved.</p></div></div></footer></body></html>

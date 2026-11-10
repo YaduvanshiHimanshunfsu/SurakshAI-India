@@ -1,0 +1,21 @@
+# Python
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+coverage.xml
+htmlcov/
+
+# Vendored / local packages directory (not committed)
+.packages/
+
+# Node / frontend — don't commit dependencies, but DO commit the built output
+node_modules/
+# frontend/dist/ is intentionally committed so Vercel can serve the built SPA
+# without needing a separate Node.js build step.
+
+# Local frontend env overrides (only .env.production is committed)
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local

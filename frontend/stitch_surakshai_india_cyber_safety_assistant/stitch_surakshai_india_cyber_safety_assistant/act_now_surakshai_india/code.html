@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"primary-fixed":"#dae2fd","on-tertiary-fixed":"#002114","secondary-fixed":"#dbe1ff","on-secondary-fixed-variant":"#003ea8","on-secondary-container":"#fefcff","on-primary-fixed-variant":"#3f465c","on-tertiary":"#ffffff","on-primary-container":"#7c839b","inverse-on-surface":"#eff1f3","surface-container-low":"#f2f4f6","surface":"#f7f9fb","surface-container-lowest":"#ffffff","error-container":"#ffdad6","secondary-container":"#316bf3","on-primary":"#ffffff","primary":"#000000","surface-variant":"#e0e3e5","on-error":"#ffffff","background":"#f7f9fb","on-primary-fixed":"#131b2e","secondary":"#0051d5","on-secondary-fixed":"#00174b","inverse-surface":"#2d3133","tertiary-fixed-dim":"#68dba9","surface-container-highest":"#e0e3e5","surface-dim":"#d8dadc","surface-container":"#eceef0","tertiary-fixed":"#85f8c4","on-surface-variant":"#45464d","inverse-primary":"#bec6e0","on-tertiary-fixed-variant":"#005137","on-error-container":"#93000a","outline":"#76777d","primary-fixed-dim":"#bec6e0","surface-container-high":"#e6e8ea","on-background":"#191c1e","on-tertiary-container":"#069669","tertiary":"#000000","tertiary-container":"#002114","on-surface":"#191c1e","on-secondary":"#ffffff","surface-bright":"#f7f9fb","primary-container":"#131b2e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"3xl":"64px","unit":"4px","md":"16px","xl":"32px","2xl":"48px","lg":"24px","margin-desktop":"auto","margin-mobile":"16px","sm":"8px","gutter":"24px","xs":"4px","max-width":"1280px"},"fontFamily":{"headline-md":["Inter"],"hindi-body":["Noto Sans Devanagari"],"headline-sm":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"display-lg-mobile":["Inter"],"display-lg":["Inter"],"body-lg":["Inter"]},"fontSize":{"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"hindi-body":["18px",{"lineHeight":"30px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="bg-background font-body-md text-on-surface"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-max-width mx-auto px-margin-mobile lg:px-lg flex items-center justify-between"><div class="flex items-center gap-sm"><img alt="SurakshAI-India Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqzZNVv3QtfB1CEDEKxPsxzCHIBY9TZW8cqK8kdP6DbyOXoViCfNnX5qHN6ZGHl2lcQVzVEtInDMuHbRHkGSiQPejA7-Fk_hSuG_goB-Akj8haOx1q2hBCot0ljkFweHdRHZ56O-xakREUMlqV-I7q8Sj2jwAmImGnNrfGYJGiyFfWEtjPu6rseToCHlBNlV1c6WtmZHvkEgGV8CzR4UghjMNzOEomw1CHKYwHaCuJCPoJReN6jam2vg"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">SurakshAI-India</span></div><nav class="hidden md:flex items-center gap-lg" data-active-classes="text-secondary font-bold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" data-path="home" href="#">How it works</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" data-path="learn" href="#">Safety tips</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" data-path="analyse" href="#">Try demo</a></nav><div class="flex items-center gap-md"><button class="md:hidden flex items-center text-on-surface"><span class="material-symbols-outlined">menu</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16"><div class="flex flex-col w-full">
+<section class="w-full relative overflow-hidden bg-surface-container py-2xl lg:py-3xl" id="hero-section">
+<div class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at top right, var(--tw-colors-error-container) 0%, transparent 40%), radial-gradient(circle at bottom left, var(--tw-colors-primary-container) 0%, transparent 40%);"></div>
+<div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg relative z-10">
+<div class="flex flex-col md:flex-row gap-lg items-start md:items-center justify-between">
+<div class="max-w-3xl flex flex-col gap-sm">
+<div class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-error-container text-on-error-container font-label-md text-label-md mb-md self-start shadow-sm ring-1 ring-error-container/20">
+<span class="material-symbols-outlined text-[16px]">emergency</span>
+<span>Immediate Action Guide</span>
+</div>
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface">What happened after this message?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-sm">Select the option that best describes your interaction. We will guide you on the exact steps you need to take to secure your accounts and report the incident.</p>
+</div>
+<div class="hidden md:flex w-24 h-24 rounded-full bg-surface items-center justify-center shadow-lg relative" id="hero-icon-container">
+<div class="absolute inset-0 rounded-full border-4 border-dashed border-error/20 animate-spin-slow" style="animation-duration: 8s;"></div>
+<span class="material-symbols-outlined text-[40px] text-error">security_update_warning</span>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-background pb-3xl -mt-xl relative z-20">
+<div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg">
+<div class="bg-surface rounded-xl shadow-xl p-lg md:p-xl lg:p-2xl">
+<div class="flex flex-col gap-md mb-xl" id="question-container">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings: 'FILL' 1;">help</span>
+            Did you interact with this message?
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Choose your response below to view a personalized safety checklist.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md" id="interaction-options">
+<button class="interaction-btn group flex flex-col items-start gap-md p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden text-left" data-target="flow-received">
+<div class="absolute top-0 left-0 w-1 h-full bg-outline-variant group-hover:bg-primary transition-colors"></div>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[24px]">visibility</span>
+</div>
+<div class="flex flex-col gap-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">I only received it</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">I did not tap links, open attachments, or reply.</p>
+</div>
+</button>
+<button class="interaction-btn group flex flex-col items-start gap-md p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden text-left" data-target="flow-clicked">
+<div class="absolute top-0 left-0 w-1 h-full bg-outline-variant group-hover:bg-secondary transition-colors"></div>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-secondary-fixed group-hover:text-on-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[24px]">touch_app</span>
+</div>
+<div class="flex flex-col gap-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">I clicked a link</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">I clicked a link, opened an attachment, or called the number provided.</p>
+</div>
+</button>
+<button class="interaction-btn group flex flex-col items-start gap-md p-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden text-left border border-transparent hover:border-error-container/50" data-target="flow-shared">
+<div class="absolute top-0 left-0 w-1 h-full bg-outline-variant group-hover:bg-error transition-colors"></div>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-error-container group-hover:text-on-error-container transition-colors">
+<span class="material-symbols-outlined text-[24px]">money_off</span>
+</div>
+<div class="flex flex-col gap-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-error transition-colors">I shared details or money</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">I entered passwords, OTPs, personal info, or made a payment.</p>
+</div>
+</button>
+</div>
+<div class="mt-xl hidden" id="flow-content-area">
+<div class="h-px w-full bg-outline-variant mb-xl opacity-30"></div>
+<div class="flow-panel hidden flex-col gap-lg animate-fade-in-up" id="flow-received">
+<div class="flex items-center gap-sm p-md rounded-lg bg-tertiary-fixed-dim/20 text-on-tertiary-fixed font-body-md text-body-md shadow-sm">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<strong>Low Risk:</strong> You are generally safe. Simply interacting with the text (reading it) usually does not compromise your device.
+              </div>
+<div class="flex flex-col gap-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Next Steps</h3>
+<div class="grid gap-sm">
+<div class="flex items-start gap-md p-md rounded-lg bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0 mt-xs font-label-md text-label-md text-on-surface-variant">1</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Block and Report</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Block the sender in your messaging app. Most platforms offer a "Report Spam" option alongside blocking.</span>
+</div>
+</div>
+<div class="flex items-start gap-md p-md rounded-lg bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0 mt-xs font-label-md text-label-md text-on-surface-variant">2</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Delete the Message</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Remove the message from your device to prevent accidental interaction later.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flow-panel hidden flex-col gap-lg animate-fade-in-up" id="flow-clicked">
+<div class="flex items-center gap-sm p-md rounded-lg bg-primary-fixed text-on-primary-fixed font-body-md text-body-md shadow-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">warning</span>
+<strong>Moderate Risk:</strong> Clicking a link may have exposed your device to malware or directed you to a convincing fake website.
+              </div>
+<div class="flex flex-col gap-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Immediate Actions</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-sm p-md rounded-lg bg-surface-container-lowest shadow-sm h-full">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant">wifi_off</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Disconnect Internet</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">Turn on Airplane Mode immediately to stop any potential background downloads or data exfiltration.</span>
+</div>
+<div class="flex flex-col gap-sm p-md rounded-lg bg-surface-container-lowest shadow-sm h-full">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant">password</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Reset Passwords</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">Use a *different* device to change passwords for any accounts related to the message context (e.g., banking, email).</span>
+</div>
+<div class="flex flex-col gap-sm p-md rounded-lg bg-surface-container-lowest shadow-sm h-full">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant">security</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Run Antivirus Scan</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">If you use Android or a PC, run a full system scan with reputable antivirus software once reconnected safely.</span>
+</div>
+<div class="flex flex-col gap-sm p-md rounded-lg bg-surface-container-lowest shadow-sm h-full">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant">account_balance</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Monitor Accounts</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">Keep a close eye on your bank statements and email logs for unusual activity over the next few days.</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flow-panel hidden flex-col gap-lg animate-fade-in-up" id="flow-shared">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-md p-lg rounded-xl bg-error-container text-on-error-container shadow-md border-l-4 border-error">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs font-headline-sm text-headline-sm">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">error</span>
+                    High Risk: Act Immediately
+                  </div>
+<p class="font-body-md text-body-md opacity-90">Time is critical. Financial or personal data compromise requires rapid intervention to minimize loss.</p>
+</div>
+<div class="flex flex-col gap-xs min-w-[200px] shrink-0">
+<a class="inline-flex items-center justify-center gap-sm px-md py-md rounded-lg bg-error text-on-error font-label-md text-label-md hover:bg-error/90 transition-colors shadow-sm" href="tel:1930">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                     Call 1930 Now
+                   </a>
+<a class="inline-flex items-center justify-center gap-sm px-md py-sm rounded-lg bg-surface-container-lowest text-error font-label-md text-label-md hover:bg-surface-container-lowest/80 transition-colors shadow-sm border border-error/20" href="https://cybercrime.gov.in" rel="noopener noreferrer" target="_blank">
+                     cybercrime.gov.in
+                     <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Critical Checklist</h3>
+<div class="grid gap-md">
+<div class="flex items-start gap-md p-md rounded-lg bg-surface-container-lowest shadow-sm border-l-[3px] border-secondary">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0 mt-xs font-label-md text-label-md text-on-secondary-fixed">1</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Contact Your Bank or Service Provider</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Call your bank's official emergency number immediately to freeze affected accounts, block cards, or stop transactions. Do not use any numbers from the suspicious message.</span>
+</div>
+</div>
+<div class="flex items-start gap-md p-md rounded-lg bg-surface-container-lowest shadow-sm border-l-[3px] border-secondary">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0 mt-xs font-label-md text-label-md text-on-secondary-fixed">2</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Report to 1930</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Dial 1930 (National Cyber Crime Reporting Portal Helpline) to report financial fraud. They can assist banks in tracing and stopping stolen funds if reported early.</span>
+</div>
+</div>
+<div class="flex items-start gap-md p-md rounded-lg bg-surface-container-lowest shadow-sm border-l-[3px] border-outline">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0 mt-xs font-label-md text-label-md text-on-surface-variant">3</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Change Compromised Passwords</span>
+<span class="font-body-md text-body-md text-on-surface-variant">If you shared login credentials, use a safe device to change the passwords immediately and enable Two-Factor Authentication (2FA).</span>
+</div>
+</div>
+<div class="flex items-start gap-md p-md rounded-lg bg-surface-container-lowest shadow-sm border-l-[3px] border-outline">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0 mt-xs font-label-md text-label-md text-on-surface-variant">4</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Preserve Evidence</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Take screenshots of the message, website, or any transactions before deleting anything. This evidence is crucial for law enforcement.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-2xl flex flex-col items-center justify-center text-center p-lg rounded-xl bg-surface-container opacity-0 transition-opacity duration-500" id="reassurance-footer">
+<div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-md shadow-sm">
+<span class="material-symbols-outlined text-[32px] text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Stay Calm, Act Fast</h4>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Taking immediate, methodical steps significantly reduces potential harm. You are not alone in handling this.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow {
+    animation: spin-slow linear infinite;
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.interaction-btn');
+    const flowArea = document.getElementById('flow-content-area');
+    const flowPanels = document.querySelectorAll('.flow-panel');
+    const reassuranceFooter = document.getElementById('reassurance-footer');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        // Reset styles for all buttons
+        buttons.forEach(btn => {
+          btn.classList.remove('ring-2', 'ring-offset-2', 'ring-primary', 'shadow-md', 'bg-surface-container');
+          btn.classList.add('bg-surface-container-lowest', 'shadow-sm');
+          
+          // Reset indicator bars
+          const indicator = btn.querySelector('div:first-child');
+          if(indicator) {
+            indicator.classList.remove('bg-primary', 'bg-secondary', 'bg-error', 'w-2');
+            indicator.classList.add('bg-outline-variant', 'w-1');
+          }
+        });
+
+        // Apply active styles to clicked button
+        const clickedBtn = e.currentTarget;
+        clickedBtn.classList.remove('bg-surface-container-lowest', 'shadow-sm');
+        clickedBtn.classList.add('ring-2', 'ring-offset-2', 'shadow-md', 'bg-surface-container');
+        
+        const targetId = clickedBtn.getAttribute('data-target');
+        const activeIndicator = clickedBtn.querySelector('div:first-child');
+        
+        // Color coding specific to selection
+        if(targetId === 'flow-received') {
+          clickedBtn.classList.add('ring-primary');
+          if(activeIndicator) activeIndicator.classList.replace('bg-outline-variant', 'bg-primary');
+        } else if (targetId === 'flow-clicked') {
+          clickedBtn.classList.add('ring-secondary');
+           if(activeIndicator) activeIndicator.classList.replace('bg-outline-variant', 'bg-secondary');
+        } else if (targetId === 'flow-shared') {
+          clickedBtn.classList.add('ring-error');
+          if(activeIndicator) activeIndicator.classList.replace('bg-outline-variant', 'bg-error');
+        }
+        
+        if(activeIndicator) activeIndicator.classList.replace('w-1', 'w-2');
+
+
+        // Show content area if hidden
+        if (flowArea.classList.contains('hidden')) {
+          flowArea.classList.remove('hidden');
+        }
+
+        // Hide all panels
+        flowPanels.forEach(panel => {
+          panel.classList.add('hidden');
+          panel.classList.remove('flex');
+        });
+
+        // Show targeted panel
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+          targetPanel.classList.remove('hidden');
+          targetPanel.classList.add('flex');
+          
+          // Scroll slightly to ensure content is visible
+          setTimeout(() => {
+             targetPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
+
+        // Show reassurance footer
+        reassuranceFooter.classList.remove('opacity-0');
+      });
+    });
+  });
+</script></main><footer class="w-full bg-surface-container py-xl mt-3xl"><div class="max-w-max-width mx-auto px-margin-mobile lg:px-lg"><div class="flex flex-col items-center gap-md text-center"><p class="font-body-md text-label-md text-on-surface-variant max-w-2xl">SurakshAI provides guidance, not a guarantee. Verify important requests through official channels.</p><div class="h-px w-24 bg-outline-variant"></div><p class="font-label-md text-label-md text-on-surface-variant opacity-70">© 2024 SurakshAI-India. All rights reserved.</p></div></div></footer></body></html>

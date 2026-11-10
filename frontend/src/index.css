@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root { font-family: Inter, "Noto Sans Devanagari", system-ui, sans-serif; color: #191c1e; background: #f7f9fb; font-synthesis: none; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: #f7f9fb; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid rgb(37 99 235 / .35); outline-offset: 2px; }
+.hindi { font-family: "Noto Sans Devanagari", Inter, sans-serif; line-height: 1.75; }
+.card { border: 1px solid #e2e8f0; background: #fff; box-shadow: 0 12px 30px rgb(15 23 42 / .04); }
+.grid-glow { background-image: radial-gradient(circle at 84% 14%, rgb(37 99 235 / .14), transparent 28rem), radial-gradient(circle at 11% 80%, rgb(5 150 105 / .09), transparent 25rem); }
