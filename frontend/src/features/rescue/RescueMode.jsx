@@ -19,7 +19,7 @@ const TONES = {
   CRITICAL: { panel: 'border-red-200 bg-red-50', badge: 'bg-red-100 text-red-800', label: 'Urgent action needed' },
 }
 
-export function RescueMode({ result, onPlanReady }) {
+export function RescueMode({ result, onPlanReady, onExposureChange }) {
   const [exposure, setExposure] = useState('')
   const [plan, setPlan] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -58,7 +58,7 @@ export function RescueMode({ result, onPlanReady }) {
     <fieldset className="mt-5 grid gap-3 sm:grid-cols-2">
       <legend className="sr-only">Your exposure to the suspected scam</legend>
       {EXPOSURES.map((item) => <label key={item.id} className={`cursor-pointer rounded-xl border p-4 transition ${exposure === item.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-100' : 'border-slate-200 bg-white hover:border-blue-200'}`}>
-        <input className="sr-only" type="radio" name="exposure" value={item.id} checked={exposure === item.id} onChange={() => { setExposure(item.id); setPlan(null); onPlanReady?.(null) }} />
+        <input className="sr-only" type="radio" name="exposure" value={item.id} checked={exposure === item.id} onChange={() => { setExposure(item.id); setPlan(null); onPlanReady?.(null); onExposureChange?.(item.id) }} />
         <span className="block text-sm font-bold text-slate-900">{item.label}</span><span className="mt-1 block text-xs leading-5 text-slate-600">{item.detail}</span>
       </label>)}
     </fieldset>

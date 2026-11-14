@@ -2,6 +2,10 @@ export function qrDecoderSupported() {
   return typeof window !== 'undefined' && 'BarcodeDetector' in window
 }
 
+export function qrCameraSupported() {
+  return qrDecoderSupported() && Boolean(globalThis.isSecureContext && navigator.mediaDevices?.getUserMedia)
+}
+
 export async function decodeQrFile(file) {
   if (!qrDecoderSupported()) throw new Error('QR decoding is not supported by this browser. Paste the QR text instead, or use screenshot analysis with consent.')
   const bitmap = await createImageBitmap(file)

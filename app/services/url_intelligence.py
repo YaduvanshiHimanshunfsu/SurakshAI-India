@@ -14,10 +14,12 @@ import httpx
 import tldextract
 
 from app.config import Settings
+from app.data.known_sites import KNOWN_SITES
 from app.schemas import (
     ReputationProviderResult,
     ReputationStatus,
     Severity,
+    SiteProfile,
     TlsDetails,
     TlsStatus,
     UrlAnalysis,
@@ -132,6 +134,7 @@ class UrlIntelligenceService:
                 ],
                 tls=TlsDetails(status=TlsStatus.NOT_CHECKED),
                 reputation=[],
+                site_profile=None,
                 summary="The link could not be safely normalised for inspection.",
                 limitations=f"No site content was opened. Detail: {str(exc)[:160]}",
             )
@@ -193,11 +196,34 @@ class UrlIntelligenceService:
             signals=signals[:12],
             tls=tls,
             reputation=reputation,
+            site_profile=self._site_profile(target.registered_domain),
             summary=self._summary(risk_level, known_flag, signals),
             limitations=(
                 "This assessment uses URL structure, TLS verification, and optional threat-intelligence lookups. "
                 "A valid HTTPS certificate or no known blocklist match does not prove that a site is legitimate. "
                 "The page itself was not opened or executed."
+            ),
+        )
+
+    @staticmethod
+    def _site_profile(registered_domain: str) -> SiteProfile:
+        known = KNOWN_SITES.get(registered_domain)
+        if known:
+            return SiteProfile(
+                status="KNOWN_OFFICIAL_DOMAIN",
+                name=known["name"],
+                description=known["description"],
+                verification_note=(
+                    "The registered domain matches SurakshAI’s reviewed official-domain directory. "
+                    "This does not authenticate this exact page, download, message, or request."
+                ),
+            )
+        return SiteProfile(
+            status="NOT_IN_REVIEWED_DIRECTORY",
+            name=None,
+            description="This registered domain is not in SurakshAI’s small reviewed official-domain directory.",
+            verification_note=(
+                "That is not proof that the site is unsafe. Verify the exact domain through an independently known official source before entering information or making a payment."
             ),
         )
 
@@ -506,6 +532,7 @@ class UrlIntelligenceService:
             signals=[],
             tls=TlsDetails(status=TlsStatus.NOT_CHECKED),
             reputation=[],
+            site_profile=None,
             summary="The URL could not be analysed at this time.",
             limitations="No conclusion should be drawn from an unavailable URL analysis.",
         )

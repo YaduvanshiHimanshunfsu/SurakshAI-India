@@ -11,14 +11,16 @@ export function AnalysisSessionProvider({ children }) {
   const [sourceKind, setSourceKind] = useState('MESSAGE')
   const [caseId, setCaseId] = useState('')
   const [rescuePlan, setRescuePlan] = useState(null)
+  const [exposureState, setExposureState] = useState('')
   const value = useMemo(() => ({
-    analysis, sourceText, sourceKind, caseId, rescuePlan,
+    analysis, sourceText, sourceKind, caseId, rescuePlan, exposureState,
     saveAnalysis: (nextAnalysis, nextText, nextKind) => {
-      setAnalysis(nextAnalysis); setSourceText(nextText); setSourceKind(nextKind); setCaseId(createCaseId()); setRescuePlan(null)
+      setAnalysis(nextAnalysis); setSourceText(nextText); setSourceKind(nextKind); setCaseId(createCaseId()); setRescuePlan(null); setExposureState('')
     },
     setRescuePlan,
-    clearAnalysis: () => { setAnalysis(null); setSourceText(''); setCaseId(''); setRescuePlan(null) },
-  }), [analysis, sourceText, sourceKind, caseId, rescuePlan])
+    setExposureState,
+    clearAnalysis: () => { setAnalysis(null); setSourceText(''); setCaseId(''); setRescuePlan(null); setExposureState('') },
+  }), [analysis, sourceText, sourceKind, caseId, rescuePlan, exposureState])
   return <AnalysisSessionContext.Provider value={value}>{children}</AnalysisSessionContext.Provider>
 }
 

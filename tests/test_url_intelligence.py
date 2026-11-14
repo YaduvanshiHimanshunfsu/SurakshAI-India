@@ -34,3 +34,18 @@ def test_url_extraction_deduplicates_and_removes_trailing_punctuation() -> None:
     )
 
     assert urls == ["https://example.com/login", "sbi-verify-kyc.in/urgent", "www.test.org/path"]
+
+
+def test_reviewed_domain_profile_never_authenticates_a_specific_page() -> None:
+    profile = UrlIntelligenceService._site_profile("google.com")
+
+    assert profile.status == "KNOWN_OFFICIAL_DOMAIN"
+    assert profile.name == "Google"
+    assert "does not authenticate" in profile.verification_note
+
+
+def test_unknown_domain_profile_is_cautious_not_a_scam_label() -> None:
+    profile = UrlIntelligenceService._site_profile("example.org")
+
+    assert profile.status == "NOT_IN_REVIEWED_DIRECTORY"
+    assert "not proof" in profile.verification_note

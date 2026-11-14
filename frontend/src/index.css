@@ -4,10 +4,21 @@
 :root { font-family: Inter, "Noto Sans Devanagari", system-ui, sans-serif; color: #191c1e; background: #f7f9fb; font-synthesis: none; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; background: #f7f9fb; }
-button, input, textarea { font: inherit; }
+body { margin: 0; min-width: 320px; background: #f7f9fb; font-size: 14px; line-height: 1.5; }
+button, input, textarea, select { font: inherit; }
 button { cursor: pointer; }
-button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid rgb(37 99 235 / .35); outline-offset: 2px; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid rgb(37 99 235 / .55); outline-offset: 3px; }
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
 .hindi { font-family: "Noto Sans Devanagari", Inter, sans-serif; line-height: 1.75; }
 .card { border: 1px solid #e2e8f0; background: #fff; box-shadow: 0 12px 30px rgb(15 23 42 / .04); }
 .grid-glow { background-image: radial-gradient(circle at 84% 14%, rgb(37 99 235 / .14), transparent 28rem), radial-gradient(circle at 11% 80%, rgb(5 150 105 / .09), transparent 25rem); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+@media (pointer: coarse) {
+  button, a, input[type="checkbox"], input[type="radio"] { min-height: 44px; }
+}
+@media (forced-colors: active) {
+  .card { border: 1px solid CanvasText; }
+}

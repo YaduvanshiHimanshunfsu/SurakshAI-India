@@ -331,6 +331,37 @@ Voice guidance uses browser-native speech synthesis with explicit Hindi and
 Hinglish play controls, plus pause, resume, and stop. It does not autoplay or
 send content to a third-party narration service.
 
+### Link Profile and legitimacy signals
+
+For a pasted URL, SurakshAI shows the registered domain, URL-risk signals,
+HTTPS/TLS status, and configured threat-intelligence matches. A small reviewed
+directory can also identify an exact official registered domain (for example,
+`google.com`, `unicef.org`, or `cybercrime.gov.in`) and explain what organisation
+that domain belongs to. This is deliberately **not** a claim that a particular
+page, download, message, or payment request is genuine. Unrecognised domains are
+shown as “not in reviewed directory”, never automatically labelled fraudulent.
+The service does not open the page, execute its code, follow redirects, or fetch
+its visible content just to create this profile.
+
+### Browser and device compatibility
+
+Essential message, link, and email checks target current Chromium, Edge,
+Firefox, Android Chrome, and iOS Safari. Advanced capabilities always expose a
+safe fallback rather than blocking the user:
+
+| Capability | Preferred browser feature | Safe fallback |
+|---|---|---|
+| QR scan | `BarcodeDetector` and camera | Upload a QR image where supported, paste the decoded UPI/URL payload, or use consented screenshot text extraction |
+| Hindi/Hinglish narration | `speechSynthesis` | Readable Hindi and Hinglish scripts are shown in the page |
+| Voice note recording | `MediaRecorder` and microphone | Upload an existing short audio file |
+| Evidence locker | IndexedDB + Web Crypto | A clear storage warning; masked PDF export still works without saving evidence |
+| Clipboard | Clipboard API | Manual paste remains available in every text field |
+| Motion | Framer Motion | `prefers-reduced-motion` disables route/card animation |
+
+Camera and microphone controls require a secure origin (HTTPS, or localhost in
+development) and explicit browser permission. The client keeps clear upload or
+text alternatives visible when access is unavailable.
+
 ---
 
 ## 🧪 Real Indian Scam Examples (Built into the App)
@@ -430,10 +461,15 @@ pytest -q
 cd frontend
 npm test
 
-# Browser workflow tests (installs Chromium once on a developer/CI machine)
-npx playwright install chromium
+# Browser workflow tests (Chromium, Firefox, WebKit, and mobile Chrome profile)
+npx playwright install
 npm run test:e2e
 ```
+
+The Playwright suite covers empty Rescue/Evidence states, the message-to-result
+flow, screenshot/voice review entry points, masked Evidence Pack controls,
+keyboard focus, reduced-motion styling, and mobile navigation. Run it on a
+machine where browsers can start and access the local Vite preview server.
 
 
 Before deploying to Vercel, build the SPA with `npm run build`. The generated

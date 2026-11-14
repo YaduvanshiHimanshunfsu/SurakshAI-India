@@ -213,6 +213,17 @@ class ReputationProviderResult(BaseModel):
     detail: str | None = Field(default=None, max_length=240)
 
 
+class SiteProfile(BaseModel):
+    """Cautious domain-level context; never proof for a specific page or request."""
+
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    status: str = Field(min_length=3, max_length=64)
+    name: str | None = Field(default=None, max_length=160)
+    description: str = Field(min_length=10, max_length=400)
+    verification_note: str = Field(min_length=10, max_length=400)
+
+
 class UrlAnalysis(BaseModel):
     """A conservative, explainable assessment of one user-supplied URL."""
 
@@ -227,6 +238,7 @@ class UrlAnalysis(BaseModel):
     signals: list[UrlSignal] = Field(default_factory=list, max_length=12)
     tls: TlsDetails
     reputation: list[ReputationProviderResult] = Field(default_factory=list, max_length=3)
+    site_profile: SiteProfile | None = None
     summary: str = Field(min_length=5, max_length=500)
     limitations: str = Field(min_length=10, max_length=500)
 
