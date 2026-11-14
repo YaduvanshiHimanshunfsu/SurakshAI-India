@@ -9,6 +9,7 @@ from google.genai import types
 from pydantic import ValidationError
 
 from app.config import Settings
+from app.core.provider_guard import ProviderConcurrencyGate
 from app.prompts import SYSTEM_PROMPT, build_user_message
 from app.schemas import AnalysisResponse, AnalysisSource, AnalyzeRequest, RedFlag, UrlAnalysis, Verdict
 from app.services.fallback_analyzer import RuleBasedFallbackAnalyzer
@@ -25,7 +26,7 @@ class ProviderUnavailableError(RuntimeError):
 class ScamAnalyzer:
     """Coordinates provider analysis and validates every model-produced field."""
 
-    def __init__(self, settings: Settings) -> None:
+    def __init__(self, settings: Settings, provider_gate: ProviderConcurrencyGate | None = None) -> None:
         self._settings = settings
         self._fallback = RuleBasedFallbackAnalyzer()
         self._url_intelligence = UrlIntelligenceService(settings)
@@ -33,6 +34,7 @@ class ScamAnalyzer:
         self._async_client: Any | None = None
         self._model_candidates: tuple[str, ...] | None = None
         self._model_lock = asyncio.Lock()
+        self._provider_gate = provider_gate
 
     @property
     def _gemini(self) -> Any:
@@ -64,8 +66,8 @@ class ScamAnalyzer:
             last_error: Exception | None = None
             for model_name in candidates:
                 try:
-                    response = await asyncio.wait_for(
-                        self._gemini.models.generate_content(
+                    async def generate():
+                        return await self._gemini.models.generate_content(
                             model=model_name,
                             contents=build_user_message(request.message, request.language),
                             config=types.GenerateContentConfig(
@@ -74,9 +76,12 @@ class ScamAnalyzer:
                                 response_schema=AnalysisResponse,
                                 max_output_tokens=900,
                             ),
-                        ),
-                        timeout=self._settings.gemini_timeout_seconds,
-                    )
+                        )
+                    if self._provider_gate is None:
+                        response = await asyncio.wait_for(generate(), timeout=self._settings.gemini_timeout_seconds)
+                    else:
+                        async with self._provider_gate.slot():
+                            response = await asyncio.wait_for(generate(), timeout=self._settings.gemini_timeout_seconds)
                     text = getattr(response, "text", None)
                     if not isinstance(text, str) or not text.strip():
                         raise ModelOutputError("Provider returned no text content")

@@ -11,6 +11,7 @@ from google.genai import types
 from pydantic import ValidationError
 
 from app.config import Settings
+from app.core.provider_guard import ProviderConcurrencyGate
 from app.schemas import MediaExtractionCandidate, MediaExtractionResponse, MediaKind
 from app.services.media_validation import MediaValidationError, ValidatedMedia, sanitise_screenshot
 from app.utils.json_output import ModelOutputError, parse_json_object
@@ -33,10 +34,11 @@ Return only a JSON object matching the requested schema."""
 class MediaAnalyzer:
     """Extracts text only after validation and consent; it never stores the upload."""
 
-    def __init__(self, settings: Settings) -> None:
+    def __init__(self, settings: Settings, provider_gate: ProviderConcurrencyGate | None = None) -> None:
         self._settings = settings
         self._client: Any | None = None
         self._async_client: Any | None = None
+        self._provider_gate = provider_gate
 
     @property
     def _gemini(self) -> Any:
@@ -60,8 +62,8 @@ class MediaAnalyzer:
         last_error: Exception | None = None
         for model_name in self._settings.gemini_model_candidates[: max(1, self._settings.gemini_max_model_attempts)]:
             try:
-                response = await asyncio.wait_for(
-                    self._gemini.models.generate_content(
+                async def generate():
+                    return await self._gemini.models.generate_content(
                         model=model_name,
                         contents=[_SYSTEM_INSTRUCTION, types.Part.from_bytes(data=content, mime_type=mime_type)],
                         config=types.GenerateContentConfig(
@@ -70,9 +72,12 @@ class MediaAnalyzer:
                             max_output_tokens=2_400,
                             temperature=0,
                         ),
-                    ),
-                    timeout=self._settings.gemini_timeout_seconds,
-                )
+                    )
+                if self._provider_gate is None:
+                    response = await asyncio.wait_for(generate(), timeout=self._settings.gemini_timeout_seconds)
+                else:
+                    async with self._provider_gate.slot():
+                        response = await asyncio.wait_for(generate(), timeout=self._settings.gemini_timeout_seconds)
                 text = getattr(response, "text", None)
                 if not isinstance(text, str) or not text.strip():
                     raise ModelOutputError("Provider returned no extracted text")

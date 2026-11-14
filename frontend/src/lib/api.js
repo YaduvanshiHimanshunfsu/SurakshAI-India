@@ -12,10 +12,22 @@ async function request(path, payload) {
   return body
 }
 
+async function get(path) {
+  const response = await fetch(`${API_BASE_URL}${path}`)
+  const body = await response.json().catch(() => null)
+  if (!response.ok) throw new Error(body?.detail || 'The safety service could not load this information. Please try again.')
+  return body
+}
+
 export const analyseMessage = (message, language = 'auto') => request('/surakshai/analyze', { message, language })
 export const analyseUrl = (url) => request('/surakshai/url/analyze', { url })
 export const analyseEmail = (payload) => request('/surakshai/email/analyze', payload)
 export const createRescuePlan = (payload) => request('/surakshai/rescue-plan', payload)
+export const checkSafeNextStep = (payload) => request('/surakshai/safe-next-step', payload)
+export const analyseQrPayload = (payload) => request('/surakshai/qr/analyze', payload)
+export const verifyOrganisation = (text) => request('/surakshai/organisation/verify', { text })
+export const getTrustedChannels = () => get('/surakshai/trusted-channels')
+export const explainSimply = (payload) => request('/surakshai/explain-simply', payload)
 
 export async function extractMedia(file, mediaKind, consent) {
   const body = new FormData()

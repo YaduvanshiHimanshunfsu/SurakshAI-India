@@ -78,7 +78,15 @@ The most devastating part: **85% of victims say they had a gut feeling something
 - The model's response is **schema-validated** before it reaches the browser.
 
 ### 🛡️ Offline Fallback
-- If the AI provider is unavailable (no key or network error), a transparent **rule-based fallback analyser** still provides a useful, clearly-labelled response — ensuring the demo never crashes.
+- If the AI provider is unavailable (no key or network error), a transparent **rule-based fallback analyser** still provides a useful, clearly-labelled response. Its reviewed rule packs cover OTP/PIN theft, UPI collect requests, QR-payment tricks, KYC, remote-access apps, fake jobs, courier, government, investment, customer-care, romance, and sextortion scams.
+
+### 🧭 Immediate Safety Tools
+- **Safe to do next?** gives deterministic answers for links, calls, payments, app installs, OTPs, QR payments, and attachments. It is deliberately not AI-generated.
+- **Hindi + Hinglish voice guidance** uses the browser’s built-in speech synthesis; narration never leaves the device and never autoplays.
+- **QR-code safety scan** decodes a QR image or camera frame locally in the browser. Only the decoded UPI URI or URL is sent for analysis; the image is not uploaded.
+- **Organisation claim checker** recognises claims involving banks, UIDAI, Income Tax, EPFO, India Post, police/cybercrime, and telecom/KYC, then directs users to independently known official domains. It never certifies a message as genuine.
+- **Explain this simply** converts the verdict into plain English, Hindi, and Hinglish with deterministic Do/Don't guidance.
+- **Official help directory** contains first-party reporting and recovery routes without collecting account numbers, card details, passwords, PINs, or OTPs.
 
 ### 🔐 Evidence Locker and Report Pack
 - Stores user-selected analysed evidence in **browser-only IndexedDB**, encrypted with a non-extractable **AES-GCM Web Crypto** key.
@@ -223,6 +231,11 @@ All endpoints are under `/api/v1/`:
 | `POST` | `/surakshai/media/validate` | Validate a consented image/audio upload in memory without saving it |
 | `POST` | `/surakshai/media/extract` | Extract reviewable text from a consented screenshot or short voice note |
 | `POST` | `/surakshai/rescue-plan` | Return deterministic, exposure-specific safety and evidence guidance |
+| `POST` | `/surakshai/safe-next-step` | Give a reviewed immediate decision before a risky action |
+| `POST` | `/surakshai/qr/analyze` | Analyse a browser-decoded QR payload without receiving the image |
+| `POST` | `/surakshai/organisation/verify` | Find claimed organisations and safe independent verification routes |
+| `GET` | `/surakshai/trusted-channels` | List official reporting and recovery guidance without collecting secrets |
+| `POST` | `/surakshai/explain-simply` | Return deterministic plain English, Hindi, and Hinglish guidance |
 | `GET` | `/health` | Returns provider status and fallback availability |
 
 ### Example request
@@ -285,6 +298,15 @@ text/transcription, which the user must review and can correct before the existi
 scam analysis and Rescue Mode run. If extraction fails, SurakshAI asks the user to
 paste or type the text instead; it never invents a transcript.
 
+### Multi-page user flow
+
+The React client now uses privacy-safe routes: `/` (landing), `/check`
+(analysis workspace), `/result` (risk signals and immediate guidance),
+`/rescue`, `/evidence`, `/help`, and `/learn`. Analysed content is kept only in
+an in-memory React session while moving between pages; it is never placed in a
+route, query string, or browser storage. The separate Evidence Locker remains
+the only persistence mechanism, using encrypted IndexedDB.
+
 ### Evidence Locker and PDF Evidence Pack
 
 After an analysis, the user can preserve the analysed text in the **Evidence
@@ -297,6 +319,17 @@ flags, extracted indicators, recovery actions, saved local evidence, and the
 official 1930 / NCRP reporting information. Exports mask phone numbers, email
 usernames, UPI IDs, cards, identity numbers, secrets, and private URL query data
 by default. An unredacted export is possible only after an explicit confirmation.
+
+### QR, voice, and clear guidance
+
+QR decoding uses the browser’s native `BarcodeDetector` when available. A QR
+image is never sent to the server merely to discover its value. If the browser
+does not support local QR decoding, the user can paste the decoded content or
+choose the existing, explicitly consented screenshot-text workflow.
+
+Voice guidance uses browser-native speech synthesis with explicit Hindi and
+Hinglish play controls, plus pause, resume, and stop. It does not autoplay or
+send content to a third-party narration service.
 
 ---
 
@@ -382,6 +415,8 @@ SurakshAI-India/
 - **Prompt injection protection**: User-submitted text is wrapped in `<untrusted_message>` delimiters and the system prompt explicitly instructs the model to treat it as untrusted data.
 - **No URL execution**: URL intelligence never follows redirects, downloads page content, runs JavaScript, or submits unknown links to external scanners unless VirusTotal/Web Risk keys are configured.
 - **No inbox access**: Email analysis accepts pasted text or `.eml` files only. No OAuth, no IMAP, no inbox connection of any kind.
+- **Shared rate limiting in production**: configure Upstash Redis to enforce anonymous limits across Vercel instances; development falls back to an in-memory limiter.
+- **Privacy-safe monitoring**: optional Sentry receives only operational metadata after evidence-related fields are scrubbed.
 
 ---
 
@@ -394,7 +429,12 @@ pytest -q
 # Browser-side privacy and report-generation unit tests
 cd frontend
 npm test
+
+# Browser workflow tests (installs Chromium once on a developer/CI machine)
+npx playwright install chromium
+npm run test:e2e
 ```
+
 
 Before deploying to Vercel, build the SPA with `npm run build`. The generated
 `frontend/dist` directory is served by the FastAPI entrypoint referenced by
@@ -415,7 +455,7 @@ This repository is ready for a single Vercel deployment:
 
 1. Run `cd frontend; npm run build` and commit the updated `frontend/dist` folder.
 2. Push the repository and import it in Vercel. Select **Other** if Vercel asks for a framework preset.
-3. Add `GEMINI_API_KEY` in **Vercel → Settings → Environment Variables**. Add optional `WEB_RISK_API_KEY` or `VIRUSTOTAL_API_KEY` only if needed.
+3. Add `GEMINI_API_KEY` in **Vercel → Settings → Environment Variables**. Add optional `WEB_RISK_API_KEY` or `VIRUSTOTAL_API_KEY` only if needed. For shared production rate limits, set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`; set `SENTRY_DSN` only if privacy-scrubbed error monitoring is required.
 4. Set `ENVIRONMENT=production` and set `ALLOWED_ORIGINS` to the deployment URL, for example `https://your-project.vercel.app`.
 5. Deploy, then open `/api/v1/health`, analyse a test message, and download a masked PDF Evidence Pack.
 

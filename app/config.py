@@ -42,6 +42,16 @@ class Settings(BaseSettings):
     enable_offline_fallback: bool = True
     rate_limit_requests: int = 20
     rate_limit_window_seconds: int = 60
+    daily_anonymous_limit: int = Field(default=120, ge=10, le=2_000)
+    upstash_redis_rest_url: SecretStr | None = None
+    upstash_redis_rest_token: SecretStr | None = None
+    rate_limit_backend_timeout_seconds: float = Field(default=2.0, ge=0.2, le=10.0)
+    rate_limit_fail_open: bool = False
+    trust_proxy_headers: bool = True
+    provider_max_concurrent_requests: int = Field(default=4, ge=1, le=32)
+    provider_queue_wait_seconds: float = Field(default=3.0, ge=0.1, le=15.0)
+    sentry_dsn: SecretStr | None = None
+    sentry_traces_sample_rate: float = Field(default=0.05, ge=0, le=1)
 
     # Keep application requests comfortably below the 4.5 MB serverless payload
     # limit. This includes multipart boundaries as well as the media itself.

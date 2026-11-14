@@ -11,12 +11,19 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import router
 from app.config import get_settings
-from app.core.limiter import InMemoryRateLimiter
+from app.core.monitoring import initialise_monitoring
+from app.core.provider_guard import ProviderConcurrencyGate
+from app.core.rate_limiter import build_rate_limiter
 from app.core.middleware import RequestSizeLimitMiddleware, SecurityHeadersMiddleware
 from app.services.scam_analyzer import ScamAnalyzer
 from app.services.email_analyzer import EmailAnalyzer
 from app.services.rescue_planner import RescuePlanner
 from app.services.media_analyzer import MediaAnalyzer
+from app.services.decision_checker import DecisionChecker
+from app.services.organisation_verifier import OrganisationVerifier
+from app.services.qr_analyzer import QrAnalyzer
+from app.services.simple_explainer import SimpleExplainer
+from app.services.trusted_channel_service import TrustedChannelService
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
@@ -34,17 +41,22 @@ _INDEX_HTML = _FRONTEND_DIR / "index.html"
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
-    app.state.analyzer = ScamAnalyzer(settings)
+    initialise_monitoring(settings)
+    provider_gate = ProviderConcurrencyGate(settings.provider_max_concurrent_requests, settings.provider_queue_wait_seconds)
+    app.state.analyzer = ScamAnalyzer(settings, provider_gate=provider_gate)
     app.state.email_analyzer = EmailAnalyzer(settings, app.state.analyzer)
     app.state.rescue_planner = RescuePlanner()
-    app.state.media_analyzer = MediaAnalyzer(settings)
-    app.state.rate_limiter = InMemoryRateLimiter(
-        limit=settings.rate_limit_requests,
-        window_seconds=settings.rate_limit_window_seconds,
-    )
+    app.state.media_analyzer = MediaAnalyzer(settings, provider_gate=provider_gate)
+    app.state.rate_limiter = build_rate_limiter(settings)
+    app.state.decision_checker = DecisionChecker()
+    app.state.qr_analyzer = QrAnalyzer(app.state.analyzer)
+    app.state.organisation_verifier = OrganisationVerifier()
+    app.state.trusted_channel_service = TrustedChannelService()
+    app.state.simple_explainer = SimpleExplainer()
     yield
     await app.state.media_analyzer.close()
     await app.state.analyzer.close()
+    await app.state.rate_limiter.close()
 
 
 def create_app() -> FastAPI:
@@ -62,7 +74,7 @@ def create_app() -> FastAPI:
         redoc_url=None,
         lifespan=lifespan,
     )
-    app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(SecurityHeadersMiddleware, production=settings.environment == "production")
     app.add_middleware(RequestSizeLimitMiddleware, max_request_bytes=settings.max_request_bytes)
     app.add_middleware(
         CORSMiddleware,

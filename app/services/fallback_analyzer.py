@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from dataclasses import dataclass
-
+from app.data.scam_rules import DEFAULT_ACTIONS, GENERIC_ACTIONS, SCAM_SIGNAL_RULES
 from app.schemas import (
     AnalysisResponse,
     AnalysisSource,
@@ -15,87 +14,7 @@ from app.schemas import (
 )
 
 
-@dataclass(frozen=True)
-class SignalRule:
-    pattern: str
-    points: int
-    category: ScamCategory
-    tactic: PsychologicalTactic | None
-    explanation: str
-
-
-RULES: tuple[SignalRule, ...] = (
-    SignalRule(r"\b(?:upi|gpay|phonepe|paytm)\b", 10, ScamCategory.UPI_FRAUD, None,
-               "Payment-app references need extra care when combined with pressure or links."),
-    SignalRule(r"\b(?:kyc|verify (?:your )?account|update (?:your )?details)\b", 22,
-               ScamCategory.KYC_SCAM, PsychologicalTactic.AUTHORITY_IMPERSONATION,
-               "Unexpected KYC or verification requests are commonly used to steal account details."),
-    SignalRule(r"\b(?:blocked?|suspend(?:ed)?|service (?:will be )?stop(?:ped)?)\b", 24,
-               ScamCategory.KYC_SCAM, PsychologicalTactic.FEAR_INDUCTION,
-               "Threats of account or service suspension are designed to create fear."),
-    SignalRule(r"\b(?:within|in)\s+(?:\d+|one|two|24)\s*(?:hours?|hrs?)\b|\b(?:urgent|immediately|last date|today only)\b",
-               18, ScamCategory.UNKNOWN, PsychologicalTactic.FALSE_URGENCY,
-               "Urgent deadlines are a common tactic to stop people from verifying independently."),
-    SignalRule(r"\b(?:share|send|tell|provide|give)\b.{0,35}\b(?:otp|one[ -]?time password|cvv|pin)\b",
-               62, ScamCategory.OTP_THEFT, PsychologicalTactic.OTP_SOCIAL_ENGINEERING,
-               "Legitimate support staff will not ask you to share an OTP, PIN, or CVV."),
-    SignalRule(r"\b(?:won|winner|lucky draw|kbc|lottery|prize)\b", 32,
-               ScamCategory.LOTTERY_PRIZE, PsychologicalTactic.TOO_GOOD_TO_BE_TRUE,
-               "Unexpected prize claims are a frequent fraud pattern."),
-    SignalRule(r"\b(?:processing fee|registration fee|claim fee|pay.{0,18}(?:fee|charge))\b",
-               34, ScamCategory.LOTTERY_PRIZE, PsychologicalTactic.PROCESSING_FEE_TRAP,
-               "A small fee to unlock a much larger reward is a common scam pattern."),
-    SignalRule(r"\b(?:work from home|youtube videos?|like videos?|data entry|earn.{0,25}(?:per hour|daily))\b",
-               32, ScamCategory.FAKE_JOB, PsychologicalTactic.TOO_GOOD_TO_BE_TRUE,
-               "Unsolicited easy-income offers are frequently used for job-task fraud."),
-    SignalRule(r"\b(?:telegram|trading group|guaranteed returns?|95% accurate|crypto signals?)\b",
-               34, ScamCategory.INVESTMENT_FRAUD, PsychologicalTactic.SOCIAL_PROOF_FABRICATION,
-               "Guaranteed returns and exclusive trading groups are high-risk investment signals."),
-    SignalRule(r"\b(?:pm kisan|pm awas|aadhaar|epfo|income tax refund|rbi)\b", 22,
-               ScamCategory.GOVERNMENT_IMPERSONATION, PsychologicalTactic.AUTHORITY_IMPERSONATION,
-               "Government or regulator names can be impersonated to gain trust."),
-    SignalRule(r"\b(?:customs|courier|parcel|fedex|package).{0,45}\b(?:held|duty|charge|release)\b",
-               30, ScamCategory.COURIER_SCAM, PsychologicalTactic.FEAR_INDUCTION,
-               "Unexpected package and customs-payment messages should be verified through official tracking."),
-    SignalRule(r"\b(?:microsoft|amazon|apple).{0,45}\b(?:customer care|support|suspicious activity)\b",
-               24, ScamCategory.TECH_SUPPORT, PsychologicalTactic.AUTHORITY_IMPERSONATION,
-               "Scammers often impersonate well-known support teams to obtain access or credentials."),
-    SignalRule(r"\b(?:click (?:here|this link)|open (?:this )?link|wa\.me/|bit\.ly/)\b",
-               18, ScamCategory.PHISHING_LINK, PsychologicalTactic.FALSE_URGENCY,
-               "Unexpected links can lead to credential theft or malicious payment pages."),
-)
-
 URL_PATTERN = re.compile(r"(?:https?://|www\.)\S+|\b[a-z0-9][a-z0-9-]{1,62}\.(?:com|in|net|org|co|xyz)(?:/\S*)?", re.I)
-
-
-DEFAULT_ACTIONS: dict[ScamCategory, list[str]] = {
-    ScamCategory.OTP_THEFT: [
-        "Do not share any OTP, PIN, CVV, password, or screen-sharing code.",
-        "End the conversation and contact the company through its official app or website.",
-        "If you shared details or lost money, call 1930 immediately.",
-    ],
-    ScamCategory.PHISHING_LINK: [
-        "Do not open the link or install any app from it.",
-        "Verify the request through the organisation's official app or website.",
-        "Block and report the sender if the message is unsolicited.",
-    ],
-    ScamCategory.KYC_SCAM: [
-        "Do not use the link or number in the message.",
-        "Check your account only through the official bank or telecom app.",
-        "If you entered banking details or lost money, call 1930 immediately.",
-    ],
-    ScamCategory.UPI_FRAUD: [
-        "Do not approve collect requests or send money to verify an account.",
-        "Open your payment app directly to check your account status.",
-        "If money was lost, call 1930 immediately and notify your bank.",
-    ],
-}
-
-GENERIC_ACTIONS = [
-    "Do not act on the message until you verify it through an official channel.",
-    "Do not share passwords, OTPs, PINs, CVVs, or banking details.",
-    "Block and report the sender if the message was unsolicited or misleading.",
-]
 
 
 class RuleBasedFallbackAnalyzer:
@@ -112,19 +31,24 @@ class RuleBasedFallbackAnalyzer:
         flags: list[RedFlag] = []
         seen_phrases: set[str] = set()
 
-        for rule in RULES:
+        matched_actions: list[str] = []
+        hindi_reason: str | None = None
+        for rule in SCAM_SIGNAL_RULES:
             match = re.search(rule.pattern, message, flags=re.IGNORECASE | re.DOTALL)
             if not match:
                 continue
             phrase = match.group(0).strip()
             phrase_key = phrase.casefold()
-            score += rule.points
-            category_points[rule.category] += rule.points
+            score += rule.risk_weight
+            category_points[rule.category] += rule.risk_weight
             if rule.tactic and rule.tactic not in tactics:
                 tactics.append(rule.tactic)
             if phrase_key not in seen_phrases and len(flags) < 6:
-                flags.append(RedFlag(phrase=phrase, explanation=rule.explanation))
+                flags.append(RedFlag(phrase=phrase, explanation=rule.simple_explanation))
                 seen_phrases.add(phrase_key)
+            if rule.safe_action not in matched_actions:
+                matched_actions.append(rule.safe_action)
+            hindi_reason = hindi_reason or rule.hindi_explanation
 
         url_match = URL_PATTERN.search(message)
         if url_match and score >= 18:
@@ -154,11 +78,24 @@ class RuleBasedFallbackAnalyzer:
             confidence = 62
 
         if verdict == Verdict.SCAM:
-            hindi = "इस संदेश में धोखाधड़ी के कई संकेत हैं। कोई लिंक न खोलें और कोई OTP या बैंक जानकारी साझा न करें।"
+            hindi = hindi_reason or "इस संदेश में धोखाधड़ी के कई संकेत हैं। कोई लिंक न खोलें और कोई OTP या बैंक जानकारी साझा न करें।"
         elif verdict == Verdict.SUSPICIOUS:
             hindi = "यह संदेश संदिग्ध लग रहा है। कार्रवाई करने से पहले आधिकारिक ऐप या वेबसाइट से इसकी पुष्टि करें।"
         else:
             hindi = "इस संदेश में स्पष्ट धोखाधड़ी के संकेत नहीं मिले, फिर भी पैसे या निजी जानकारी से जुड़े अनुरोध की आधिकारिक माध्यम से पुष्टि करें।"
+
+        # Keep the advice short, but de-duplicate a matched instruction before
+        # trimming so the urgent 1930 guidance is not accidentally displaced.
+        action_steps: list[str] = []
+        for action in matched_actions + DEFAULT_ACTIONS.get(category, GENERIC_ACTIONS):
+            if action not in action_steps:
+                action_steps.append(action)
+        if verdict == Verdict.SCAM:
+            urgent_actions = [action for action in action_steps if "1930" in action]
+            non_urgent_actions = [action for action in action_steps if "1930" not in action]
+            # Retain a concise prevention action and surface the official fraud
+            # channel rather than burying it behind near-duplicate advice.
+            action_steps = non_urgent_actions[:2] + urgent_actions[:1] if urgent_actions else non_urgent_actions
 
         return AnalysisResponse(
             verdict=verdict,
@@ -167,7 +104,7 @@ class RuleBasedFallbackAnalyzer:
             severity=severity,
             psychological_tactics=tactics,
             red_flags=flags,
-            action_steps=DEFAULT_ACTIONS.get(category, GENERIC_ACTIONS),
+            action_steps=action_steps[:3],
             hindi_summary=hindi,
             safe_explanation=(
                 "No strong scam signals were found by the limited offline checks. This is not a guarantee of legitimacy."

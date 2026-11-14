@@ -42,6 +42,29 @@ class RescueUrgency(str, Enum):
     CRITICAL = "CRITICAL"
 
 
+class SafeAction(str, Enum):
+    CLICK_LINK = "CLICK_LINK"
+    CALL_NUMBER = "CALL_NUMBER"
+    PAY_MONEY = "PAY_MONEY"
+    INSTALL_APP = "INSTALL_APP"
+    SHARE_OTP = "SHARE_OTP"
+    SCAN_OR_PAY_QR = "SCAN_OR_PAY_QR"
+    OPEN_ATTACHMENT = "OPEN_ATTACHMENT"
+
+
+class SafetyDecision(str, Enum):
+    STOP_NOW = "STOP_NOW"
+    VERIFY_FIRST = "VERIFY_FIRST"
+    LOWER_RISK_STILL_VERIFY = "LOWER_RISK_STILL_VERIFY"
+
+
+class QrPayloadKind(str, Enum):
+    UPI_PAYMENT = "UPI_PAYMENT"
+    URL = "URL"
+    TEXT = "TEXT"
+    UNKNOWN = "UNKNOWN"
+
+
 class EvidenceKind(str, Enum):
     MESSAGE = "MESSAGE"
     SCREENSHOT = "SCREENSHOT"
@@ -390,6 +413,99 @@ class RescuePlan(BaseModel):
     actions: list[RescueAction] = Field(min_length=1, max_length=8)
     evidence_to_preserve: list[str] = Field(default_factory=list, max_length=10)
     limitations: list[str] = Field(min_length=1, max_length=4)
+
+
+class SafeNextStepRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    action: SafeAction
+    verdict: Verdict = Verdict.SUSPICIOUS
+    scam_category: ScamCategory = ScamCategory.UNKNOWN
+    exposure_state: ExposureState = ExposureState.RECEIVED_ONLY
+
+
+class SafeNextStepResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    decision: SafetyDecision
+    title: str = Field(min_length=5, max_length=160)
+    simple_explanation: str = Field(min_length=10, max_length=500)
+    hindi_explanation: str = Field(min_length=5, max_length=500)
+    hinglish_explanation: str = Field(min_length=5, max_length=500)
+    steps: list[str] = Field(min_length=1, max_length=5)
+
+
+class QrAnalyzeRequest(BaseModel):
+    """A browser-decoded QR payload. The source image is never sent here."""
+
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    payload: str = Field(min_length=1, max_length=2_048)
+
+
+class QrAnalyzeResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    payload_kind: QrPayloadKind
+    decision: SafetyDecision
+    title: str = Field(min_length=5, max_length=160)
+    simple_explanation: str = Field(min_length=10, max_length=500)
+    hindi_explanation: str = Field(min_length=5, max_length=500)
+    actions: list[str] = Field(min_length=1, max_length=5)
+    upi_id: str | None = Field(default=None, max_length=256)
+    url_analysis: UrlAnalysis | None = None
+
+
+class OrganisationVerifyRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    text: str = Field(min_length=3, max_length=5_000)
+
+
+class OrganisationClaim(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    claimed_organisation: str = Field(min_length=2, max_length=160)
+    official_domains: list[str] = Field(default_factory=list, max_length=5)
+    safe_instruction: str = Field(min_length=10, max_length=500)
+    risk_reason: str = Field(min_length=10, max_length=500)
+
+
+class OrganisationVerifyResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    claims: list[OrganisationClaim] = Field(default_factory=list, max_length=8)
+    notice: str = Field(min_length=10, max_length=300)
+
+
+class TrustedChannel(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    category: str = Field(min_length=2, max_length=100)
+    title: str = Field(min_length=2, max_length=160)
+    official_url: str | None = Field(default=None, max_length=2_048)
+    phone: str | None = Field(default=None, max_length=32)
+    instruction: str = Field(min_length=10, max_length=500)
+
+
+class SimpleExplainRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    verdict: Verdict
+    scam_category: ScamCategory = ScamCategory.UNKNOWN
+    red_flags: list[RedFlag] = Field(default_factory=list, max_length=6)
+    exposure_state: ExposureState = ExposureState.RECEIVED_ONLY
+
+
+class SimpleExplainResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    simple_explanation: str = Field(min_length=10, max_length=500)
+    hindi_explanation: str = Field(min_length=5, max_length=500)
+    hinglish_explanation: str = Field(min_length=5, max_length=500)
+    do_steps: list[str] = Field(min_length=1, max_length=3)
+    dont_steps: list[str] = Field(min_length=1, max_length=3)
+    why_risky: str = Field(min_length=10, max_length=500)
 
 
 class EvidenceItem(BaseModel):

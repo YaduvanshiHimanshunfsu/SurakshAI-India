@@ -14,6 +14,15 @@ from app.schemas import (
     MediaValidationResponse,
     RescuePlan,
     RescueRequest,
+    SafeNextStepRequest,
+    SafeNextStepResponse,
+    QrAnalyzeRequest,
+    QrAnalyzeResponse,
+    OrganisationVerifyRequest,
+    OrganisationVerifyResponse,
+    TrustedChannel,
+    SimpleExplainRequest,
+    SimpleExplainResponse,
     UrlAnalysis,
     UrlAnalyzeRequest,
 )
@@ -22,6 +31,11 @@ from app.services.scam_analyzer import ProviderUnavailableError, ScamAnalyzer
 from app.services.media_validation import MediaValidationError, MediaValidator
 from app.services.media_analyzer import MediaAnalyzer, MediaExtractionUnavailableError
 from app.services.rescue_planner import RescuePlanner
+from app.services.decision_checker import DecisionChecker
+from app.services.organisation_verifier import OrganisationVerifier
+from app.services.qr_analyzer import QrAnalyzer
+from app.services.simple_explainer import SimpleExplainer
+from app.services.trusted_channel_service import TrustedChannelService
 
 router = APIRouter(tags=["SurakshAI-India"])
 
@@ -40,6 +54,26 @@ def get_rescue_planner(request: Request) -> RescuePlanner:
 
 def get_media_analyzer(request: Request) -> MediaAnalyzer:
     return request.app.state.media_analyzer
+
+
+def get_decision_checker(request: Request) -> DecisionChecker:
+    return request.app.state.decision_checker
+
+
+def get_qr_analyzer(request: Request) -> QrAnalyzer:
+    return request.app.state.qr_analyzer
+
+
+def get_organisation_verifier(request: Request) -> OrganisationVerifier:
+    return request.app.state.organisation_verifier
+
+
+def get_trusted_channel_service(request: Request) -> TrustedChannelService:
+    return request.app.state.trusted_channel_service
+
+
+def get_simple_explainer(request: Request) -> SimpleExplainer:
+    return request.app.state.simple_explainer
 
 
 async def enforce_rate_limit(request: Request) -> None:
@@ -196,6 +230,68 @@ async def create_rescue_plan(
     """Return reviewed safety guidance; no secret or account data is accepted."""
 
     return planner.create_plan(payload)
+
+
+@router.post(
+    "/surakshai/safe-next-step",
+    response_model=SafeNextStepResponse,
+    dependencies=[Depends(enforce_rate_limit)],
+    summary="Return deterministic advice before a risky next action",
+)
+async def safe_next_step(
+    payload: SafeNextStepRequest,
+    checker: DecisionChecker = Depends(get_decision_checker),
+) -> SafeNextStepResponse:
+    return checker.check(payload)
+
+
+@router.post(
+    "/surakshai/qr/analyze",
+    response_model=QrAnalyzeResponse,
+    dependencies=[Depends(enforce_rate_limit)],
+    summary="Assess a browser-decoded QR payload without uploading the QR image",
+)
+async def analyze_qr(
+    payload: QrAnalyzeRequest,
+    analyzer: QrAnalyzer = Depends(get_qr_analyzer),
+) -> QrAnalyzeResponse:
+    return await analyzer.analyze(payload)
+
+
+@router.post(
+    "/surakshai/organisation/verify",
+    response_model=OrganisationVerifyResponse,
+    dependencies=[Depends(enforce_rate_limit)],
+    summary="Find claimed organisations and independent official verification routes",
+)
+async def verify_organisation(
+    payload: OrganisationVerifyRequest,
+    verifier: OrganisationVerifier = Depends(get_organisation_verifier),
+) -> OrganisationVerifyResponse:
+    return verifier.verify(payload)
+
+
+@router.get(
+    "/surakshai/trusted-channels",
+    response_model=list[TrustedChannel],
+    dependencies=[Depends(enforce_rate_limit)],
+    summary="List official reporting and recovery channels without collecting secrets",
+)
+async def trusted_channels(service: TrustedChannelService = Depends(get_trusted_channel_service)) -> list[TrustedChannel]:
+    return service.list_channels()
+
+
+@router.post(
+    "/surakshai/explain-simply",
+    response_model=SimpleExplainResponse,
+    dependencies=[Depends(enforce_rate_limit)],
+    summary="Explain a verdict in deterministic plain English, Hindi, and Hinglish",
+)
+async def explain_simply(
+    payload: SimpleExplainRequest,
+    explainer: SimpleExplainer = Depends(get_simple_explainer),
+) -> SimpleExplainResponse:
+    return explainer.explain(payload)
 
 
 @router.post(
